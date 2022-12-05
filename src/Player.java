@@ -1,3 +1,4 @@
+import DataTypes.AwokenQueenPosition;
 import DataTypes.HandPosition;
 import DataTypes.PlayerState;
 import DataTypes.Position;
@@ -5,10 +6,14 @@ import DataTypes.Position;
 import java.util.List;
 
 public class Player {
-    public PlayerState playerState;
-    public Hand hand;
+    private PlayerState playerState;
+    private Hand hand;
+    private int playerIdx;
+    private AwokenQueens awokenQueens;
 
-    public Player(PlayerState playerState){
+    public Player(PlayerState playerState, int playerIdx){
+        this.playerIdx = playerIdx;
+        this.hand = new Hand(this.playerIdx);
         this.playerState = playerState;
     }
 
