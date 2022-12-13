@@ -16,7 +16,7 @@ public class Game {
         drawingAndTrashPile = new DrawingAndTrashPile();
         playerList = new ArrayList<>();
         for(int i = 0; i < playerSize; i++){
-            playerList.add(new Player(new PlayerState(drawingAndTrashPile.getInitialCards(), new HashMap<>()), i));
+            //playerList.add(new Player(new PlayerState(drawingAndTrashPile.getInitialCards(), new HashMap<>()), i));
         }
 
         Set<SleepingQueenPosition> sleepingQueenPositions = new HashSet<>();
@@ -32,4 +32,7 @@ public class Game {
         return null;
     }
 
+    public DrawingAndTrashPile getDrawingAndTrashPile() {
+        return drawingAndTrashPile;
+    }
 }

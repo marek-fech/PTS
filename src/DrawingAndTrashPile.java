@@ -62,10 +62,10 @@ public class DrawingAndTrashPile {
         return discardedThisTurn;
     }
 
-    public Map<Integer, Optional<Card>> getInitialCards(){
-        Map<Integer, Optional<Card>> cards = new HashMap<>();
+    public List<Card> getInitialCards(){
+        List<Card> cards = new ArrayList<>();
         for(int i = 0; i < 5; i++){
-            cards.put(i, Optional.ofNullable(drawingPile.get(0)));
+            cards.add(drawingPile.get(0));
             drawingPile.remove(0);
         }
         return cards;
