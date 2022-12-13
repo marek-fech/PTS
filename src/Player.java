@@ -1,7 +1,5 @@
-import DataTypes.AwokenQueenPosition;
-import DataTypes.HandPosition;
-import DataTypes.PlayerState;
-import DataTypes.Position;
+import DataTypes.*;
+import Interfaces.Position;
 
 import java.util.List;
 
@@ -13,8 +11,9 @@ public class Player {
 
     public Player(PlayerState playerState, int playerIdx){
         this.playerIdx = playerIdx;
-        this.hand = new Hand(this.playerIdx);
+        //this.hand = new Hand(this.playerIdx);
         this.playerState = playerState;
+        this.awokenQueens = new AwokenQueens(playerIdx);
     }
 
     public PlayerState getPlayerState() {

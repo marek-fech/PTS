@@ -1,11 +1,9 @@
 import DataTypes.*;
 import Interfaces.GameObserver;
 import Interfaces.GamePlayerInterface;
+import Interfaces.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class GameAdaptor implements GamePlayerInterface {
     public Game game;
@@ -13,15 +11,16 @@ public class GameAdaptor implements GamePlayerInterface {
     public Map<String, Integer> playerMap;
 
     public GameAdaptor(GameObservable gameObservable){
-        if(gameObservable.getPlayerList().size() > 2){
-            this.gameObservable = gameObservable;
-            this.game = new Game(gameObservable.getPlayerList().size());
-        }
-        int counter = 1;
-        for(String x : gameObservable.getPlayerList()){
-            playerMap.put(x, counter++);
+
+        this.gameObservable = gameObservable;
+
+        playerMap = new HashMap<>();
+        int index = 0;
+        for(String name : gameObservable.getPlayerList()){
+            playerMap.put(name, index++);
         }
 
+        this.game = new Game(playerMap.size());
     }
 
     @Override
@@ -41,23 +40,20 @@ public class GameAdaptor implements GamePlayerInterface {
 
             if(ca == 'h'){
                 cardsList.add(
-                        new Position(
-                                new HandPosition(
-                                        (int) split[i].charAt(1), playerMap.get(player))));
+                        new HandPosition(
+                                (int) split[i].charAt(1), playerMap.get(player)));
             }
 
             else if(ca == 's'){
                 String index = split[i].replace("s", "");
                 cardsList.add(
-                        new Position(
-                                new SleepingQueenPosition(Integer.parseInt(index))));
+                        new SleepingQueenPosition(Integer.parseInt(index)));
             }
 
             else if(ca == 'a'){
                 cardsList.add(
-                        new Position(
-                                new AwokenQueenPosition(//card                                      playes
-                                        Integer.valueOf(split[i].charAt(2)), Integer.valueOf(split[i].charAt(1)))));
+                        new AwokenQueenPosition(//card                                      playes
+                                Integer.valueOf(split[i].charAt(2)), Integer.valueOf(split[i].charAt(1))));
             }
 
             else{

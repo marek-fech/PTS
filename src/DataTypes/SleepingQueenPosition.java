@@ -1,6 +1,8 @@
 package DataTypes;
 
-public class SleepingQueenPosition {
+import Interfaces.Position;
+
+public class SleepingQueenPosition implements Position {
 
     private int cardIndex;
 
@@ -11,4 +13,10 @@ public class SleepingQueenPosition {
     public int getCardIndex() {
         return cardIndex;
     }
+
+    @Override
+    public int getPlayerIndex() {
+        return 0;
+    }
+
 }

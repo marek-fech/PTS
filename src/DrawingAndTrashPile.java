@@ -6,10 +6,12 @@ import java.util.*;
 public class DrawingAndTrashPile {
     private List<Card> trashPile;
     private List<Card> drawingPile;
+    private List<Card> discardedThisTurn;
 
     public DrawingAndTrashPile(){
         trashPile = new ArrayList<>();
         drawingPile = new ArrayList<>();
+        discardedThisTurn = new ArrayList<>();
 
         for(int i = 0; i < 8; i++) drawingPile.add(new Card(CardType.King, 0));
         for(int i = 0; i < 5; i++) drawingPile.add(new Card(CardType.Knight, 0));
@@ -23,13 +25,30 @@ public class DrawingAndTrashPile {
         }
 
         Collections.shuffle(drawingPile, new Random());
+    }
 
+    public List<Card> discardAndDraw(List<Card> discard){
 
     }
 
-    public Map<Integer, Card> getDrawingCards(){
-        for(int i = 0; i < 5; i++){
+    public void newTurn(){
+        discardedThisTurn.clear();
+    }
 
+    public List<Card> getDiscardedThisTurn(){
+        return discardedThisTurn;
+    }
+
+    public Map<Integer, Optional<Card>> getInitialCards(){
+        Map<Integer, Optional<Card>> cards = new HashMap<>();
+        for(int i = 0; i < 5; i++){
+            cards.put(i, Optional.ofNullable(drawingPile.get(0)));
+            drawingPile.remove(0);
         }
+        return cards;
+    }
+
+    public List<Card> getDrawingCards(){
+        return drawingPile;
     }
 }

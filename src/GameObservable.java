@@ -1,33 +1,35 @@
 import DataTypes.GameState;
 import Interfaces.GameObserver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameObservable implements GameObserver {
-    private List<GameObserver> gameObserver;
-    private List<String> playerList;
-    private GameAdaptor gameAdaptor;
+    private List<GameObserver> gameObservers;
+    private Map<String, GameObserver> playerList;
 
     public GameObservable(){
-        this.playerList = new ArrayList<>();
-        this.gameObserver = new ArrayList<>();
+        this.playerList = new HashMap<>();
+        this.gameObservers = new ArrayList<>();
     }
 
-    public void add(GameObserver observer){
-        this.gameObserver.add(observer);
+    public void add(GameObserver gameObserver){
+        if(!this.gameObservers.contains(gameObserver))
+            this.gameObservers.add(gameObserver);
     }
 
-    public void addPlayer(Integer playerIdx, String playerName, GameObserver gameObserver){
-        if(playerList.size()<5) {
-            playerList.add(playerIdx, playerName);
+    public void addPlayer(String playerName, GameObserver gameObserver){
+        if(!this.playerList.containsKey(playerName) && this.playerList.size()<5) {
+            this.playerList.put(playerName, gameObserver);
             gameObserver.notify("Added player " + playerName);
         }
     }
 
+    public void remove(GameObserver gameObserver){
+        this.gameObservers.remove(gameObserver);
+    }
 
-    public List<String> getPlayerList() {
-        return playerList;
+    public Set<String> getPlayerList() {
+        return playerList.keySet();
     }
 
     @Override
@@ -36,8 +38,11 @@ public class GameObservable implements GameObserver {
     }
 
     public void notifyAll(GameState message){
-        for(GameObserver x : gameObserver){
+        for(GameObserver x : gameObservers){
             x.notify(message.toString());
+        }
+        for(String name : playerList.keySet()){
+            playerList.get(name).notify(message.getCards().toString()); //TODO players cards
         }
     }
 }
