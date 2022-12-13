@@ -1,5 +1,7 @@
 import DataTypes.Card;
 import Enumerations.CardType;
+import Strategies.EmptyDeckHandle;
+import Strategies.StrategyOne;
 
 import java.util.*;
 
@@ -7,11 +9,14 @@ public class DrawingAndTrashPile {
     private List<Card> trashPile;
     private List<Card> drawingPile;
     private List<Card> discardedThisTurn;
+    private EmptyDeckHandle strategy;
+
 
     public DrawingAndTrashPile(){
         trashPile = new ArrayList<>();
         drawingPile = new ArrayList<>();
         discardedThisTurn = new ArrayList<>();
+        strategy = new StrategyOne();
 
         for(int i = 0; i < 8; i++) drawingPile.add(new Card(CardType.King, 0));
         for(int i = 0; i < 5; i++) drawingPile.add(new Card(CardType.Knight, 0));
@@ -25,10 +30,28 @@ public class DrawingAndTrashPile {
         }
 
         Collections.shuffle(drawingPile, new Random());
+
+
     }
 
     public List<Card> discardAndDraw(List<Card> discard){
+        List<Card> drawing = new ArrayList<>();
+        discardedThisTurn.addAll(discard);
 
+        if(drawingPile.size() < discard.size()){
+            drawing = strategy.draw(discard, drawingPile, trashPile);
+            drawingPile = strategy.getDrawingCards();
+            trashPile = strategy.getTrashCards();
+        }
+        else{
+            trashPile.addAll(discard);
+            for(int i = 0; i < discard.size(); i++){
+                drawing.add(drawingPile.get(0));
+                drawingPile.remove(0);
+            }
+        }
+
+        return drawing;
     }
 
     public void newTurn(){
@@ -50,5 +73,9 @@ public class DrawingAndTrashPile {
 
     public List<Card> getDrawingCards(){
         return drawingPile;
+    }
+
+    public void setStrategy(EmptyDeckHandle strategy){
+        this.strategy = strategy;
     }
 }
