@@ -7,7 +7,7 @@ import java.util.*;
 
 public class SleepingQueens implements QueenCollection {
     private Map<Position, Queen> queens;
-    private List<Position> empty;
+    private List<Integer> empty;
 
     public SleepingQueens() {
         empty = new ArrayList<>();
@@ -32,19 +32,31 @@ public class SleepingQueens implements QueenCollection {
 
     @Override
     public void addQueen(Queen queen) {
-        if (empty.isEmpty()) {
-            queens.put(new SleepingQueenPosition(queens.size()), queen);
-        } else {
-            queens.put(empty.get(0), queen);
-            empty.remove(0);
+        if(queens.size() < 12) {
+            if (empty.isEmpty()) {
+                queens.put(new SleepingQueenPosition(queens.size()), queen);
+            } else {
+                queens.put(new SleepingQueenPosition(empty.get(0)), queen);
+                empty.remove(0);
+            }
         }
     }
 
     @Override
     public Optional<Queen> removeQueen(Position position) {
-        empty.add(position);
-        return Optional.ofNullable(queens.remove(position));
+        Optional<Queen> queen = Optional.empty();
+
+        for(Position sleepingPosition : queens.keySet()){
+            if(sleepingPosition.getCardIndex() == position.getCardIndex()){
+                empty.add(sleepingPosition.getCardIndex());
+                return Optional.of(queens.remove(sleepingPosition));
+            }
+        }
+
+        return queen;
+
     }
+
     @Override
     public Map<Position, Queen> getQueens() {
         return queens;

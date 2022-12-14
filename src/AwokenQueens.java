@@ -15,7 +15,6 @@ public class AwokenQueens implements QueenCollection {
         queens = new HashMap<>();
         empty = new ArrayList<>();
         this.playerIdx = playerIdx;
-
     }
 
     @Override
@@ -31,11 +30,22 @@ public class AwokenQueens implements QueenCollection {
 
     @Override
     public Optional<Queen> removeQueen(Position position) {
-        Optional<Queen> queen;
-        queen = Optional.of(queens.remove(position));
-        if(queen.isPresent()){
-            empty.add(position.getCardIndex());
+        if(!(position instanceof AwokenQueenPosition))
+            return Optional.empty();
+
+        if(position.getPlayerIndex() != playerIdx)
+            return Optional.empty();
+
+
+        Optional<Queen> queen = Optional.empty();
+
+        for(Position awokenPosition : queens.keySet()){
+            if(awokenPosition.getCardIndex() == position.getCardIndex()){
+               empty.add(awokenPosition.getCardIndex());
+               return Optional.of(queens.remove(awokenPosition));
+            }
         }
+
         return queen;
     }
 

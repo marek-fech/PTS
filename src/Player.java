@@ -23,4 +23,8 @@ public class Player {
     public void play(List<Position> cards){
         //TO DO
     }
+
+    public AwokenQueens getAwokenQueens() {
+        return awokenQueens;
+    }
 }
