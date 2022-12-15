@@ -36,4 +36,8 @@ public class MoveQueen {
         }
         return false;
     }
+
+    public void setQueenCollection(QueenCollection queenCollection){
+        this.queenCollection = queenCollection;
+    }
 }

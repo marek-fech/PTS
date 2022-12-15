@@ -27,4 +27,8 @@ public class Player {
     public AwokenQueens getAwokenQueens() {
         return awokenQueens;
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }

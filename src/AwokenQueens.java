@@ -40,7 +40,7 @@ public class AwokenQueens implements QueenCollection {
         Optional<Queen> queen = Optional.empty();
 
         for(Position awokenPosition : queens.keySet()){
-            if(awokenPosition.getCardIndex() == position.getCardIndex()){
+            if(awokenPosition.getCardIndex() == position.getCardIndex()){           //make equal if doesnt work
                empty.add(awokenPosition.getCardIndex());
                return Optional.of(queens.remove(awokenPosition));
             }
