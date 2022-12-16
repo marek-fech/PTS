@@ -35,4 +35,12 @@ public class Game {
     public DrawingAndTrashPile getDrawingAndTrashPile() {
         return drawingAndTrashPile;
     }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public SleepingQueens getSleepingQueens() {
+        return sleepingQueens;
+    }
 }
