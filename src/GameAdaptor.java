@@ -28,6 +28,9 @@ public class GameAdaptor implements GamePlayerInterface {
         if(!playerMap.containsKey(player)){
             return "Incorrect input. Player " + player + " does not exists.";
         }
+        if(playerMap.keySet().size() < 2){
+            return "Not enough players!";
+        }
 
         List<Position> cardsList = new ArrayList<>();
 
@@ -35,29 +38,23 @@ public class GameAdaptor implements GamePlayerInterface {
         String[] split = cards.split(" ");
 
         //we add Postion as 'xy' where x is h,a,s for differnet position and y is index of card from 'hx'
-        for(int i = 0; i < split.length; i++){
-            Character ca = split[i].charAt(0);
+        for (String s : split) {
+            char ca = s.charAt(0);
 
-            if(ca == 'h'){
+            if (ca == 'h') {
                 cardsList.add(
                         new HandPosition(
-                                (int) split[i].charAt(1), playerMap.get(player)));
-            }
-
-            else if(ca == 's'){
-                String index = split[i].replace("s", "");
+                                s.charAt(1), playerMap.get(player)));
+            } else if (ca == 's') {
+                String index = s.replace("s", "");
                 cardsList.add(
                         new SleepingQueenPosition(Integer.parseInt(index)));
-            }
-
-            else if(ca == 'a'){
+            } else if (ca == 'a') {
                 cardsList.add(
                         new AwokenQueenPosition(//card                                      playes
-                                Integer.valueOf(split[i].charAt(2)), Integer.valueOf(split[i].charAt(1))));
-            }
-
-            else{
-                return "Incorrect format!";
+                                Integer.valueOf(s.charAt(2)), Integer.valueOf(s.charAt(1))));
+            } else {
+                return "Incorrect format used!";
             }
         }
 
@@ -65,7 +62,8 @@ public class GameAdaptor implements GamePlayerInterface {
         if(gameState.isEmpty()){
             return "Move not successful!";
         }
-        return "Move successful";
+        gameObservable.notifyAll(gameState.get());
+        return gameState.get().toString();
 
     }
 }

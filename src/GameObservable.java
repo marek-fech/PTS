@@ -41,8 +41,11 @@ public class GameObservable implements GameObserver {
         for(GameObserver x : gameObservers){
             x.notify(message.toString());
         }
+        //in game we add indexies to players by position in keySet
+        int i = 0;
         for(String name : playerList.keySet()){
-            playerList.get(name).notify(message.getCards().toString()); //TODO players cards
+            playerList.get(name).notify(message.toString(i));
+            i++;
         }
     }
 }

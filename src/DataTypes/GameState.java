@@ -21,6 +21,22 @@ public class GameState {
         this.cardsDiscartedLastTurn = cardsDiscartedLastTurn;
     }
 
+    public String toString(int player){
+        StringBuilder s = new StringBuilder();
+        s.append("on turn: ").append(onTurn).append("\n");
+        s.append("sleepingQueens: ").append(sleepingQueens.toString()).append("\n");
+
+        for (HandPosition hand : cards.keySet()){
+            if(hand.getPlayerIndex() == player){
+                s.append("cards:").append(cards.get(hand).toString()).append("\n");
+            }
+        }
+
+        s.append("awokenQueens: ").append(awokenQueens.toString()).append("\n");
+        s.append("cardsDiscartedLastTurn: ").append(cardsDiscartedLastTurn.toString()).append("\n");
+        return s.toString();
+    }
+
     //getters
     public int getNumberOfPlayers() {
         return numberOfPlayers;
