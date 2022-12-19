@@ -15,18 +15,13 @@ public class GameState {
     private List<Card>                              cardsDiscartedLastTurn;     //cards discarted in last turn (maybe)
 
     public GameState(int numberOfPlayers, int onTurn,
-                     Set<SleepingQueenPosition> sleepingQueens,
-                     Map<HandPosition, Optional<Card>> cards,
-                     Map<AwokenQueenPosition, Queen> awokenQueens,
                      List<Card> cardsDiscartedLastTurn){
         this.numberOfPlayers = numberOfPlayers;
         this.onTurn = onTurn;
-        this.sleepingQueens = sleepingQueens;
-        this.cards = cards;
-        this.awokenQueens = awokenQueens;
         this.cardsDiscartedLastTurn = cardsDiscartedLastTurn;
     }
 
+    //getters
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
@@ -51,4 +46,29 @@ public class GameState {
         return sleepingQueens;
     }
 
+
+    //setters
+    public void setCards(Map<HandPosition, Optional<Card>> cards) {
+        this.cards = cards;
+    }
+
+    public void setAwokenQueens(Map<AwokenQueenPosition, Queen> awokenQueens) {
+        this.awokenQueens = awokenQueens;
+    }
+
+    public void setCardsDiscartedLastTurn(List<Card> cardsDiscartedLastTurn) {
+        this.cardsDiscartedLastTurn = cardsDiscartedLastTurn;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public void setOnTurn(int onTurn) {
+        this.onTurn = onTurn;
+    }
+
+    public void setSleepingQueens(Set<SleepingQueenPosition> sleepingQueens) {
+        this.sleepingQueens = sleepingQueens;
+    }
 }
