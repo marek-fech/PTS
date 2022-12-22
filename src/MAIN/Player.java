@@ -17,6 +17,7 @@ public class Player {
 
 
     public Player(Hand hand, int playerIdx, SleepingQueens sleepingQueens){
+        this.hand = hand;
         this.playerIdx = playerIdx;
         this.awokenQueens = new AwokenQueens(playerIdx);
         this.sleepingQueens = sleepingQueens;

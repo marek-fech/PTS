@@ -13,8 +13,8 @@ public class Game {
     private GameFinished gameFinished;
 
     public Game(int playerSize){
-        sleepingQueens = new SleepingQueens();
-        drawingAndTrashPile = new DrawingAndTrashPile();
+        this.sleepingQueens = new SleepingQueens();
+        this.drawingAndTrashPile = new DrawingAndTrashPile();
 
         playerList = new ArrayList<>();
         for(int i = 0; i < playerSize; i++){
