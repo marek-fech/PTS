@@ -12,10 +12,12 @@ public class Hand {
     private List<Card> cards;
     private DrawingAndTrashPile drawingAndTrashPile;
     private List<Card> pickedCards;
+    private List<Integer> dontUse;
 
     public Hand(int playerIdx, DrawingAndTrashPile drawingAndTrashPile){
         this.playerIdx = playerIdx;
         this.drawingAndTrashPile = drawingAndTrashPile;
+        this.dontUse = new ArrayList<>();
         cards = drawingAndTrashPile.getInitialCards();
     }
 
@@ -43,6 +45,7 @@ public class Hand {
                     new HandPosition(cards.size() + i, playerIdx),
                     drawing.get(i));
         }
+        cards.addAll(drawing);
         returnPickedCards();
         return redrawn;
     }
@@ -54,7 +57,9 @@ public class Hand {
     public HandPosition hasCardOfType(CardType type){
         int i = 0;
         for(Card card : cards){
-            if(card.getType() == type){
+            if(card.getType() == type && !dontUse.contains(i)){
+                dontUse.add(i);
+                //cards.remove(i);
                 return new HandPosition(i, playerIdx);
             }
             i++;

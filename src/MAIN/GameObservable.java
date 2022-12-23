@@ -50,4 +50,9 @@ public class GameObservable implements GameObserver {
             i++;
         }
     }
+
+    //only for tests in GameObservableTest
+    /*public List<GameObserver> getGameObservers() {
+        return gameObservers;
+    }*/
 }

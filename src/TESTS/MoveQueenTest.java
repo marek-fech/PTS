@@ -2,11 +2,13 @@ package TESTS;
 
 import MAIN.*;
 import MAIN.DataTypes.AwokenQueenPosition;
+import MAIN.DataTypes.Queen;
 import MAIN.DataTypes.SleepingQueenPosition;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -40,6 +42,22 @@ public class MoveQueenTest {
         moveQueen.setQueenCollection(playerList.get(1).getAwokenQueens());
         assertTrue(moveQueen.play(new SleepingQueenPosition(5)));
         assertEquals(1, playerList.get(1).getAwokenQueens().getQueens().size());
+    }
+
+    @Test
+    public void test3(){
+        init();
+
+        Optional<Queen> removed = queens.removeQueen(new SleepingQueenPosition(5));
+        if(removed.isPresent()){
+            playerList.get(0).getAwokenQueens().addQueen(removed.get());
+        }
+
+        moveQueen.setQueenCollection(queens);
+        moveQueen.play(new AwokenQueenPosition(0,0));
+
+        assertEquals(0, playerList.get(0).getAwokenQueens().getQueens().size());
+        assertEquals(12, queens.getQueens().size());
     }
 
 }

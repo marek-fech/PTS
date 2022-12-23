@@ -42,7 +42,7 @@ public class GameFinished implements GameFinishedStrategy {
             int playerScore = 0;
 
             for(Queen queen : player.getAwokenQueens().getQueens().values()){
-                maxQueenCount++;
+                playerQueenCount++;
                 playerScore += queen.getPoints();
             }
 

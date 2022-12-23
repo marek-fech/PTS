@@ -31,7 +31,7 @@ public class Player {
         playerState = new PlayerState();
 
         Map<Integer, Optional<Card>> cardsInHand = new LinkedHashMap<>();
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < hand.getCards().size(); i++){
             cardsInHand.put(i, Optional.of(hand.getCards().get(i)));
         }
         playerState.setCards(cardsInHand);
