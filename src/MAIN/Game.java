@@ -1,31 +1,38 @@
 package MAIN;
 
 import MAIN.DataTypes.*;
-import MAIN.Interfaces.Position;
+import MAIN.Factory.HandFactory;
+import MAIN.Factory.PileFactory;
+import MAIN.Factory.PlayerFactory;
+import MAIN.Interfaces.*;
 
 import java.util.*;
 
 public class Game {
-    private List<Player> playerList;
-    private GameState gameState;
-    private DrawingAndTrashPile drawingAndTrashPile;
-    private SleepingQueens sleepingQueens;
-    private GameFinished gameFinished;
+    private final List<PlayerInterface> playerList;
+    private final GameState gameState;
+    private final DrawingAndTrashPileInterface drawingAndTrashPile;
+    private final SleepingQueens sleepingQueens;
+    private final GameFinished gameFinished;
 
     public Game(int playerSize){
+        HandFactory handFactory = new HandFactory();
+        PlayerFactory playerFactory = new PlayerFactory();
+        PileFactory pileFactory = new PileFactory();
+
         this.sleepingQueens = new SleepingQueens();
-        this.drawingAndTrashPile = new DrawingAndTrashPile();
+        this.drawingAndTrashPile = pileFactory.createPile();
 
         playerList = new ArrayList<>();
         for(int i = 0; i < playerSize; i++){
-            Hand hand = new Hand(i, drawingAndTrashPile);
-            playerList.add(new Player(hand, i, sleepingQueens));
+            HandInterface hand = handFactory.createHand(i, drawingAndTrashPile);
+            playerList.add(playerFactory.createPlayer(hand, i, sleepingQueens));
         }
 
-        MoveQueen moveQueen = new MoveQueen(sleepingQueens, playerList);
+        MoveQueenInterface moveQueen = new MoveQueen(sleepingQueens, playerList);
         EvaluateAttack evaluateAttack = new EvaluateAttack(playerList, moveQueen);
 
-        for(Player player : playerList){
+        for(PlayerInterface player : playerList){
             player.setMoveQueen(moveQueen);
             player.setEvaluateAttack(evaluateAttack);
         }
@@ -49,7 +56,7 @@ public class Game {
         Map<AwokenQueenPosition, Queen> awokenQueenPositions = new LinkedHashMap();
         Map<HandPosition, Optional<Card>> cards = new LinkedHashMap<>();
 
-        for(Player player : playerList){
+        for(PlayerInterface player : playerList){
             int i = 0;
             //update Awoken Queens
             for(Queen queen : player.getAwokenQueens().getQueens().values()){
@@ -86,11 +93,11 @@ public class Game {
         return Optional.empty();
     }
 
-    public DrawingAndTrashPile getDrawingAndTrashPile() {
+    public DrawingAndTrashPileInterface getDrawingAndTrashPile() {
         return drawingAndTrashPile;
     }
 
-    public List<Player> getPlayerList() {
+    public List<PlayerInterface> getPlayerList() {
         return playerList;
     }
 

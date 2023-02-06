@@ -2,21 +2,24 @@ package MAIN;
 
 import MAIN.DataTypes.*;
 import MAIN.Enumerations.CardType;
+import MAIN.Interfaces.HandInterface;
+import MAIN.Interfaces.MoveQueenInterface;
+import MAIN.Interfaces.PlayerInterface;
 import MAIN.Interfaces.Position;
 
 import java.util.*;
 
-public class Player {
+public class Player implements PlayerInterface {
     private PlayerState playerState;
-    private Hand hand;
-    private int playerIdx;
-    private AwokenQueens awokenQueens;
-    private SleepingQueens sleepingQueens;
+    private final HandInterface hand;
+    private final int playerIdx;
+    private final AwokenQueens awokenQueens;
+    private final SleepingQueens sleepingQueens;
     private EvaluateAttack evaluateAttack;
-    private MoveQueen moveQueen;
+    private MoveQueenInterface moveQueen;
 
 
-    public Player(Hand hand, int playerIdx, SleepingQueens sleepingQueens){
+    public Player(HandInterface hand, int playerIdx, SleepingQueens sleepingQueens){
         this.hand = hand;
         this.playerIdx = playerIdx;
         this.awokenQueens = new AwokenQueens(playerIdx);
@@ -43,10 +46,11 @@ public class Player {
         playerState.setAwokenQueens(queenMap);
     }
 
+    @Override
     public boolean play(List<Position> cards){
         if(cards.isEmpty() ||
                 !(cards.get(0) instanceof HandPosition) ||
-                ((HandPosition) cards.get(0)).getPlayerIndex() != playerIdx)
+                cards.get(0).getPlayerIndex() != playerIdx)
             return false;
 
         List<HandPosition> handPositionList = new ArrayList<>();
@@ -76,24 +80,24 @@ public class Player {
             }
             else if(type == CardType.Knight){
                 if(!(cards.get(1) instanceof AwokenQueenPosition) ||
-                        ((AwokenQueenPosition) cards.get(1)).getPlayerIndex() != playerIdx)
+                        cards.get(1).getPlayerIndex() != playerIdx)
                     return false;
 
                 evaluateAttack.setQueenCollection(awokenQueens);
                 evaluateAttack.setDefenseCardType(CardType.Dragon);
-                if(!evaluateAttack.play(cards.get(1), ((AwokenQueenPosition) cards.get(1)).getPlayerIndex()))
+                if(!evaluateAttack.play(cards.get(1), cards.get(1).getPlayerIndex()))
                     return false;
 
                 handPositionList.add((HandPosition) cards.get(0));
             }
             else if(type == CardType.SleepingPotion){
                 if(!(cards.get(1) instanceof AwokenQueenPosition) ||
-                        ((AwokenQueenPosition) cards.get(1)).getPlayerIndex() != playerIdx)
+                        cards.get(1).getPlayerIndex() != playerIdx)
                     return false;
 
                 evaluateAttack.setQueenCollection(sleepingQueens);
                 evaluateAttack.setDefenseCardType(CardType.MagicWand);
-                if(!evaluateAttack.play(cards.get(1), ((AwokenQueenPosition) cards.get(1)).getPlayerIndex()))
+                if(!evaluateAttack.play(cards.get(1), cards.get(1).getPlayerIndex()))
                     return false;
 
                 handPositionList.add((HandPosition) cards.get(0));
@@ -125,7 +129,7 @@ public class Player {
             ArrayList<Integer> cardIndex = new ArrayList<>();
 
             for(Position position : cards){
-                if(!(position instanceof HandPosition) || ((HandPosition)position).getPlayerIndex() != playerIdx)
+                if(!(position instanceof HandPosition) || position.getPlayerIndex() != playerIdx)
                     return false;
 
                 Card card = hand.getCards().get(position.getCardIndex());
@@ -152,27 +156,33 @@ public class Player {
     }
 
     //setters
-    public void setMoveQueen(MoveQueen moveQueen) {
+    @Override
+    public void setMoveQueen(MoveQueenInterface moveQueen) {
         this.moveQueen = moveQueen;
     }
 
+    @Override
     public void setEvaluateAttack(EvaluateAttack evaluateAttack) {
         this.evaluateAttack = evaluateAttack;
     }
 
     //getters
+    @Override
     public PlayerState getPlayerState() {
         return playerState;
     }
 
+    @Override
     public AwokenQueens getAwokenQueens() {
         return awokenQueens;
     }
 
-    public Hand getHand() {
+    @Override
+    public HandInterface getHand() {
         return hand;
     }
 
+    @Override
     public int getPlayerIdx() {
         return playerIdx;
     }

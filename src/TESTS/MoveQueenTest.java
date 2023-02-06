@@ -4,6 +4,7 @@ import MAIN.*;
 import MAIN.DataTypes.AwokenQueenPosition;
 import MAIN.DataTypes.Queen;
 import MAIN.DataTypes.SleepingQueenPosition;
+import MAIN.Interfaces.PlayerInterface;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class MoveQueenTest {
     private MoveQueen moveQueen;
-    private List<Player> playerList;
+    private List<PlayerInterface> playerList;
     private SleepingQueens queens;
     private DrawingAndTrashPile pile;
 
@@ -49,9 +50,7 @@ public class MoveQueenTest {
         init();
 
         Optional<Queen> removed = queens.removeQueen(new SleepingQueenPosition(5));
-        if(removed.isPresent()){
-            playerList.get(0).getAwokenQueens().addQueen(removed.get());
-        }
+        removed.ifPresent(queen -> playerList.get(0).getAwokenQueens().addQueen(queen));
 
         moveQueen.setQueenCollection(queens);
         moveQueen.play(new AwokenQueenPosition(0,0));

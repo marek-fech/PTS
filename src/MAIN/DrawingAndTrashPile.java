@@ -2,12 +2,13 @@ package MAIN;
 
 import MAIN.DataTypes.Card;
 import MAIN.Enumerations.CardType;
+import MAIN.Interfaces.DrawingAndTrashPileInterface;
 import MAIN.Strategies.EmptyDeckHandle;
 import MAIN.Strategies.StrategyOne;
 
 import java.util.*;
 
-public class DrawingAndTrashPile {
+public class DrawingAndTrashPile implements DrawingAndTrashPileInterface {
     private List<Card> trashPile;
     private List<Card> drawingPile;
     private List<Card> discardedThisTurn;
@@ -15,27 +16,41 @@ public class DrawingAndTrashPile {
 
 
     public DrawingAndTrashPile(){
+        init();
+        Collections.shuffle(drawingPile, new Random());
+    }
+
+    //for testing
+    public DrawingAndTrashPile(ArrayList<Integer> sort){
+        init();
+
+        List<Card> temp = new ArrayList<>();
+        for(int i = 0; i < drawingPile.size(); i++){
+            temp.add(drawingPile.get(sort.get(i)));
+        }
+
+        drawingPile = new ArrayList<>(temp);
+    }
+
+    public void init(){
         trashPile = new ArrayList<>();
         drawingPile = new ArrayList<>();
         discardedThisTurn = new ArrayList<>();
         strategy = new StrategyOne();
 
+        for(int i = 0; i < 4; i++) {
+            for (int j = 1; j <= 10; j++) {
+                drawingPile.add(new Card(CardType.Number, j));
+            }
+        }
         for(int i = 0; i < 8; i++) drawingPile.add(new Card(CardType.King, 0));
         for(int i = 0; i < 5; i++) drawingPile.add(new Card(CardType.Knight, 0));
         for(int i = 0; i < 4; i++) drawingPile.add(new Card(CardType.SleepingPotion, 0));
         for(int i = 0; i < 3; i++) drawingPile.add(new Card(CardType.MagicWand, 0));
         for(int i = 0; i < 3; i++) drawingPile.add(new Card(CardType.Dragon, 0));
-        for(int i = 0; i < 4; i++) {
-            for (int j = 1; j < 11; j++) {
-                drawingPile.add(new Card(CardType.Number, j));
-            }
-        }
-
-        Collections.shuffle(drawingPile, new Random());
-
-
     }
 
+    @Override
     public List<Card> discardAndDraw(List<Card> discard){
         List<Card> drawing = new ArrayList<>();
         discardedThisTurn.addAll(discard);
@@ -56,14 +71,17 @@ public class DrawingAndTrashPile {
         return drawing;
     }
 
+    @Override
     public void newTurn(){
         discardedThisTurn.clear();
     }
 
+    @Override
     public List<Card> getDiscardedThisTurn(){
         return discardedThisTurn;
     }
 
+    @Override
     public List<Card> getInitialCards(){
         List<Card> cards = new ArrayList<>();
         for(int i = 0; i < 5; i++){

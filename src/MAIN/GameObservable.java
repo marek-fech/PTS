@@ -5,9 +5,9 @@ import MAIN.Interfaces.GameObserver;
 
 import java.util.*;
 
-public class GameObservable implements GameObserver {
-    private List<GameObserver> gameObservers;
-    private Map<String, GameObserver> playerList;
+public class GameObservable {
+    private final List<GameObserver> gameObservers;
+    private final Map<String, GameObserver> playerList;
 
     public GameObservable(){
         this.playerList = new HashMap<>();
@@ -34,7 +34,7 @@ public class GameObservable implements GameObserver {
         return playerList.keySet();
     }
 
-    @Override
+
     public String notify(String message) {
         return message;
     }

@@ -3,6 +3,7 @@ import MAIN.*;
 import MAIN.DataTypes.HandPosition;
 import MAIN.DataTypes.SleepingQueenPosition;
 import MAIN.Enumerations.CardType;
+import MAIN.Interfaces.PlayerInterface;
 import MAIN.Interfaces.Position;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class PlayerTest {
         positions = new ArrayList<>();
 
         player = new Player(hand, 0, queens);
-        List<Player> playerList = new ArrayList<>();
+        List<PlayerInterface> playerList = new ArrayList<>();
         playerList.add(player);
         player.setMoveQueen(new MoveQueen(queens, playerList));
     }

@@ -3,24 +3,26 @@ package MAIN;
 import MAIN.DataTypes.Card;
 import MAIN.DataTypes.HandPosition;
 import MAIN.Enumerations.CardType;
-import MAIN.DrawingAndTrashPile;
+import MAIN.Interfaces.DrawingAndTrashPileInterface;
+import MAIN.Interfaces.HandInterface;
 
 import java.util.*;
 
-public class Hand {
-    private int playerIdx;
-    private List<Card> cards;
-    private DrawingAndTrashPile drawingAndTrashPile;
+public class Hand implements HandInterface {
+    private final int playerIdx;
+    private final List<Card> cards;
+    private final DrawingAndTrashPileInterface drawingAndTrashPile;
     private List<Card> pickedCards;
-    private List<Integer> dontUse;
+    private final List<Integer> dontUse;
 
-    public Hand(int playerIdx, DrawingAndTrashPile drawingAndTrashPile){
+    public Hand(int playerIdx, DrawingAndTrashPileInterface drawingAndTrashPile){
         this.playerIdx = playerIdx;
         this.drawingAndTrashPile = drawingAndTrashPile;
         this.dontUse = new ArrayList<>();
         cards = drawingAndTrashPile.getInitialCards();
     }
 
+    @Override
     public Optional<List<Card>> pickCards(List<HandPosition> positions){
         pickedCards = new ArrayList<>();
 
@@ -33,6 +35,7 @@ public class Hand {
         return Optional.ofNullable(pickedCards);
     }
 
+    @Override
     public Map<HandPosition, Card> removePickedCardsAndRedraw(){
         if(pickedCards == null)
             return new LinkedHashMap<>();
@@ -50,10 +53,12 @@ public class Hand {
         return redrawn;
     }
 
+    @Override
     public void returnPickedCards() {
         pickedCards.clear();
     }
 
+    @Override
     public HandPosition hasCardOfType(CardType type){
         int i = 0;
         for(Card card : cards){
@@ -67,6 +72,7 @@ public class Hand {
         return null;
     }
 
+    @Override
     public List<Card> getCards() {
         return cards;
     }

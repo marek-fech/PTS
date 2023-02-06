@@ -3,6 +3,7 @@ package MAIN;
 import MAIN.DataTypes.Queen;
 import MAIN.Game;
 import MAIN.Interfaces.GameFinishedStrategy;
+import MAIN.Interfaces.PlayerInterface;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class GameFinished implements GameFinishedStrategy {
         Map<Integer, Integer> indexScore = new HashMap<>();
 
         //gather players scores and queen counts
-        for(Player player : game.getPlayerList()){
+        for(PlayerInterface player : game.getPlayerList()){
             int playerQueenCount = 0;
             int playerScore = 0;
 

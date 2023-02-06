@@ -3,6 +3,7 @@ package TESTS;
 import MAIN.DataTypes.GameState;
 import MAIN.DrawingAndTrashPile;
 import MAIN.Game;
+import MAIN.Interfaces.DrawingAndTrashPileInterface;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class GameTest {
     @Test
     public void getPileTest() {
         init();
-        DrawingAndTrashPile drawingAndTrashPile = game.getDrawingAndTrashPile();
+        DrawingAndTrashPileInterface drawingAndTrashPile = game.getDrawingAndTrashPile();
         assertNotNull(drawingAndTrashPile);
     }
 

@@ -2,6 +2,7 @@ package TESTS;
 
 import MAIN.GameAdaptor;
 import MAIN.GameObservable;
+import MAIN.Interfaces.GameObserver;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,14 +12,14 @@ public class GameAdaptorTest {
 
     private void init1(){
         gameObservable = new GameObservable();
-        gameObservable.addPlayer("John", new GameObservable());
+        //gameObservable.addPlayer("John", new GameObserver());
         gameAdaptor = new GameAdaptor(gameObservable);
     }
 
     private void init2(){
         gameObservable = new GameObservable();
-        gameObservable.addPlayer("John", new GameObservable());
-        gameObservable.addPlayer("Mary", new GameObservable());
+        //gameObservable.addPlayer("John", new GameObservable());
+        //gameObservable.addPlayer("Mary", new GameObservable());
         gameAdaptor = new GameAdaptor(gameObservable);
     }
 

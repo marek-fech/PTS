@@ -2,6 +2,8 @@ package MAIN;
 
 import MAIN.DataTypes.HandPosition;
 import MAIN.Enumerations.CardType;
+import MAIN.Interfaces.MoveQueenInterface;
+import MAIN.Interfaces.PlayerInterface;
 import MAIN.Interfaces.Position;
 import MAIN.Interfaces.QueenCollection;
 
@@ -11,11 +13,11 @@ import java.util.Set;
 
 public class EvaluateAttack {
     private CardType defenseCardType;
-    private List<Player> playerList;
-    private MoveQueen moveQueen;
+    private final List<PlayerInterface> playerList;
+    private final MoveQueenInterface moveQueen;
     private QueenCollection queenCollection;
 
-    public EvaluateAttack(List<Player> playerList, MoveQueen moveQueen){
+    public EvaluateAttack(List<PlayerInterface> playerList, MoveQueenInterface moveQueen){
         this.playerList = playerList;
         this.moveQueen = moveQueen;
     }
@@ -24,7 +26,7 @@ public class EvaluateAttack {
         //if player does exist in the game
         if(playerList.size() > targetPlayerIdx && targetPlayerIdx >= 0) {
 
-            Player targetPlayer = playerList.get(targetPlayerIdx);
+            PlayerInterface targetPlayer = playerList.get(targetPlayerIdx);
             Set<Position> playersQueeens = targetPlayer.getAwokenQueens().getQueens().keySet();
 
             for (Position position : playersQueeens) {
